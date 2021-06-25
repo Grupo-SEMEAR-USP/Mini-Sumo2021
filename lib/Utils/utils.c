@@ -145,7 +145,7 @@ void return_battle(int pwm, bool sense, double time){
 }
 
 // attack enemy
-void follow_enemy(int pwm, double dist, double time{
+void follow_enemy(int pwm, double dist, double time){
   int distL, distM, distR;
   double current_time, initial_time;
 
@@ -160,13 +160,13 @@ void follow_enemy(int pwm, double dist, double time{
     /*Verify location of follow_enemy*/
     //Only left sensor is hight
     if (distL == 1 &&  distM == 0 && distR == 0){
-      motorL(pwm);
-      motorR(0);
+      motorL(0);
+      motorR(pwm);
     }
     //Only right sensor is hight
     else if (distL == 0 &&  distM == 0 && distR == 1){
-      motorL(0);
-      motorR(pwm);
+      motorL(pwm);
+      motorR(0);
     }
     //Only left and mid sensor is hight
     else if (distL == 1 &&  distM == 1 && distR == 0){
