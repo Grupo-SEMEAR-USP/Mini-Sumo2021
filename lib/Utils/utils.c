@@ -140,7 +140,9 @@ void arc_curve(int pwm, bool sense, float angle){
 
 // remove robot from the white line
 void return_battle(int pwm, bool sense, double time){
-  rot_wheel(pwm, sense);
+  move(-pwm);
+  delay(time/100);
+  rot_wheel(-pwm, sense);
   delay(time);
 }
 
@@ -176,7 +178,7 @@ void follow_enemy(int pwm, double dist, double time){
     //Only right and mid sensor is hight
     else if (distL == 0 &&  distM == 1 && distR == 1){
       motorL(pwm);
-      motorL((int) pwm / 2);
+      motorR((int) pwm / 2);
     }
     //Only mid sensor is hight or All sensor is hight
     else if (distL ==  &&  distM == 1 && distR == 0 || distL == 1 &&  distM == 1 && distR == 1){
