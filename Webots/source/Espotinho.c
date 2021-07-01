@@ -1,4 +1,6 @@
 #include "utils.h"
+#include <webots/robot.h>
+#include <time.h>
 
 #define TIME_STEP 13
 
@@ -19,7 +21,9 @@ int main(){
     
     line_sensor(&lineR, &lineL);
     dist_sensor(&distR, &distM, &distL);
-    }
+    
+    move(15);
+  }
   wb_robot_cleanup();
   return 0;
 }

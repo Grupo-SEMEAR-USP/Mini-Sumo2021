@@ -1,5 +1,3 @@
-#include <stdbool.h>
-
 #include <webots/robot.h>
 #include <stdio.h>
 #include <webots/motor.h>
@@ -9,16 +7,8 @@
 #include "utils.h"
 
 #define TIME_STEP 13
+#define DIST 100
 #define LINE 250
-
-//Delay
-void delay(int time, int actual){
-    while (wb_robot_step(TIME_STEP) != -1) {
-      if (wb_robot_get_time() > time + actual){
-        break;
-       }
-  }
-}
 
 // right engine control
 void motorR(int pwm){
@@ -38,6 +28,14 @@ void motorL(int pwm){
     wb_motor_set_velocity (left, pwm);
 }
 
+void delay(int time, int atual){
+    while (wb_robot_step(TIME_STEP) != -1) {
+      if (wb_robot_get_time() > time + atual){
+        break;
+       }
+  }
+}
+
 // left, mid and right distance sensors
 void dist_sensor(int *left, int *mid, int *right){
     WbDeviceTag distL, distR, distM;
@@ -46,12 +44,12 @@ void dist_sensor(int *left, int *mid, int *right){
     distR = wb_robot_get_device("distR");
     distM = wb_robot_get_device("distM");
 
-    wb_distance_sensor_enable(distE, TIME_STEP);
-    wb_distance_sensor_enable(distD, TIME_STEP);
+    wb_distance_sensor_enable(distL, TIME_STEP);
+    wb_distance_sensor_enable(distR, TIME_STEP);
     wb_distance_sensor_enable(distM, TIME_STEP);
 
-    *left = wb_distance_sensor_get_value(distE);
-    *right = wb_distance_sensor_get_value(distD);
+    *left = wb_distance_sensor_get_value(distL);
+    *right = wb_distance_sensor_get_value(distR);
     *mid = wb_distance_sensor_get_value(distM);
 }
 
@@ -65,8 +63,8 @@ void line_sensor(int *left, int *right){
     wb_distance_sensor_enable(lineL, TIME_STEP);
     wb_distance_sensor_enable(lineR, TIME_STEP);
     
-    *left = analogRead(lineL) <= LINE ? 1 : 0;
-    *right = analogRead(lineR) <= LINE ? 1 : 0;
+    *left = wb_distance_sensor_get_value(lineL) <= LINE ? 1 : 0;
+    *right = wb_distance_sensor_get_value(lineR) <= LINE ? 1 : 0;
 }
 
 // simple moves
@@ -76,7 +74,7 @@ void move(int pwm){
 }
 
 // rotation based on wheel axis
-void rot_wheel(int pwm, bool sense){
+void rot_wheel(int pwm, int sense){
 
     if (pwm > 0 && sense == 1){
         motorR(0);
@@ -110,7 +108,7 @@ void rot_robot(int pwm){
 }
 
 // angular curve
-void arc_curve(int pwm, bool sense, float angle){
+void arc_curve(int pwm, int sense, float angle){
 
   if (sense == 1){
     motorL(pwm);
@@ -123,11 +121,12 @@ void arc_curve(int pwm, bool sense, float angle){
 }
 
 // remove robot from the white line
-void return_battle(int pwm, bool sense, double time){
+void return_battle(int pwm, int sense, double time){
+
   move(-pwm);
-  delay(time/100);
+  delay(time/100, wb_robot_get_time());
   rot_wheel(-pwm, sense);
-  delay(time);
+  delay(time, wb_robot_get_time());
 }
 
 // attack enemy
@@ -135,7 +134,7 @@ void follow_enemy(int pwm, double dist, double time){
   int distL, distM, distR;
   double current_time, initial_time;
 
-  dist_sensor(distL, distM, distR);
+  dist_sensor(&distL, &distM, &distR);
   initial_time = wb_robot_get_time();
   current_time = initial_time;
 
@@ -158,7 +157,7 @@ void follow_enemy(int pwm, double dist, double time){
         motorL(pwm);
         motorR((int) pwm / 2);
     }
-    else if (distL ==  &&  distM == 1 && distR == 0 || distL == 1 &&  distM == 1 && distR == 1){
+    else if ((distL ==  0 &&  distM == 1 && distR == 0) || (distL == 1 &&  distM == 1 && distR == 1)){
         motorL(pwm);
         motorR(pwm);
     }
