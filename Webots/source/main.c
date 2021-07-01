@@ -1,3 +1,5 @@
+#include "utils.h"
+
 #define TIME_STEP 13
 
 #define DIST 100
@@ -17,14 +19,6 @@ int main(){
     
     line_sensor(&lineR, &lineL);
     dist_sensor(&distR, &distM, &distL);
-
-    printf("/n/n");
-    printf("/n Distance Sensor (Right): %d /n", distR);
-    printf("/n Distance Sensor (Middle): %d /n", distM);
-    printf("/n Distance Sensor (Left): %d /n", distL);
-
-
-
     }
   wb_robot_cleanup();
   return 0;
