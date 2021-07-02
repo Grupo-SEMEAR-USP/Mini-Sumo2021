@@ -1,8 +1,6 @@
 #ifndef utils_h
 #define utils_h
 
-#include <Arduino.h>
-
 //Motor control
 void motorR(int pwm);
 void motorL(int pwm);

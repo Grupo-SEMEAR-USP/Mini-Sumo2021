@@ -158,7 +158,7 @@ void follow_enemy(int pwm, double dist, double time){
   while (current_time - initial_time <= time){
     //Update current_time
     current_time = millis();
-    
+
     /*Verify location of follow_enemy*/
     //Only left sensor is hight
     if (distL == 1 &&  distM == 0 && distR == 0){

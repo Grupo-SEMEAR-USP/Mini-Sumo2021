@@ -48,9 +48,9 @@ void dist_sensor(int *left, int *mid, int *right){
     wb_distance_sensor_enable(distR, TIME_STEP);
     wb_distance_sensor_enable(distM, TIME_STEP);
 
-    *left = wb_distance_sensor_get_value(distL);
-    *right = wb_distance_sensor_get_value(distR);
-    *mid = wb_distance_sensor_get_value(distM);
+    *left = wb_distance_sensor_get_value(distL) <= LINE ? 1 : 0;
+    *right = wb_distance_sensor_get_value(distR) <= LINE ? 1 : 0;
+    *mid = wb_distance_sensor_get_value(distM) <= LINE ? 1 : 0;
 }
 
 // left and right line Sensors
@@ -138,7 +138,7 @@ void follow_enemy(int pwm, double dist, double time){
   initial_time = wb_robot_get_time();
   current_time = initial_time;
 
-  while (current_time - initial_time <= time){
+  //while (current_time - initial_time <= time){
     current_time = wb_robot_get_time();
 
     if (distL == 1 &&  distM == 0 && distR == 0){
@@ -162,8 +162,11 @@ void follow_enemy(int pwm, double dist, double time){
         motorR(pwm);
     }
     else{
+        move(pwm);
         return;
     }
 
-  }
+  //}
 }
+
+//Arrumar dist
