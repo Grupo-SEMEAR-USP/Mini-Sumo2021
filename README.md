@@ -1,6 +1,6 @@
 # Mini-Sumo 2021 (Espotinho)
 
-Esse projeto foi desenvolvido para servir de base para a participação da competição Mini-Sumo 500g, representando a equipe Atenas - USP (Grupo SEMEAR). Tal categoria de competição, consiste em robôs autônomos de no máximo 500g com o objetivo de empurrar o oponente para fora do Dohyo (arena). 
+Esse projeto foi desenvolvido para servir de base para a participação da competição Mini-Sumo 500g, representando a equipe Atena - USP (Grupo SEMEAR). Tal categoria de competição, consiste em robôs autônomos de no máximo 500g com o objetivo de empurrar o oponente para fora do Dohyo (arena). 
 
 <p align="center">
   <a href="#Projeto">Projeto</a> &nbsp; • &nbsp;
