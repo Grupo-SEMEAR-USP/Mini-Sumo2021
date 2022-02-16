@@ -1,12 +1,71 @@
-# **Mini-Sumo 2021** / **Espotinho**
+# Mini-Sumo 2021 (Espotinho)
 
-O principal objetivo da categoria de Mini-sumô é retirar o robô adversário de uma arena circular, assemelhando-se a luta japonesa sumô, essa modalidade é composta por robôs autônomos de até 500g. Sendo assim, o desenvolvimento do grupo SEMEAR neste projeto tem como intuito principal o crescimento do estudo feito em 2020 pelos integrantes do núcleo de Robótica Móvel Autônoma.
+Esse projeto foi desenvolvido para servir de base para a participação da competição Mini-Sumo 500g, representando a equipe Atenas - USP (Grupo SEMEAR). Tal categoria de competição, consiste em robôs autônomos de no máximo 500g com o objetivo de empurrar o oponente para fora do Dohyo (arena). 
 
-The main objective of the Mini-sumo category is to remove the opposing robot from a circular arena, resembling Japanese sumo wrestling, this modality is composed of autonomous robots weighing up to 500g. Therefore, the development of the SEMEAR group in this project has as its main objective the growth of the study carried out in 2020 by the members of the Autonomous Mobile Robotics nucleus.
+<p align="center">
+  <a href="#Projeto">Projeto</a> &nbsp; • &nbsp;
+  <a href="#Organização">Organização</a> &nbsp; • &nbsp;
+  <a href="#A fazer">Como testar</a> &nbsp; • &nbsp;
+  <a href="#Tecnologias">Tecnologias</a>
+</p>
 
-## Desenvolvimento / Development
+## Projeto
 
-Primeiramente, ressaltando a importância da pesquisa feita pelo grupo e pelo seus membros para se aperfeiçoar nesse estilo de competição nunca explorada anteriormente, é de suma importância citar o Espetinho (nosso primeiro projeto de mini-sumô) que mostrou a importância de alguns conhecimentos técnicos ainda não conhecidos pelo grupo nesta modalidade. Além disso, não pode-se deixar de ressaltar a valiosa participação do grupo na competição de mini-sumô na IronCUP 2021, fazendo com que houvesse a junção de todo o conhecimento adquirido pelo estudo no ano anterior e a experiência de participar de uma competição com grandes equipes. Dessa forma, é importante realçar o quanto esse projeto é promissor para o conhecimento do grupo.
+Retomando os objetivos da competição de forma mais detalhada, ela é realizada num sistema de rodadas, nos quais os robôs são colocados em posições iniciais numa arena, como está exemplificado na figura abaixo, junto as dimensões do Dohyo. Vale ressaltar que a posição inicial do robô é escolhida pela equipe, assim como a estratégia que ele realizará na rodada.
+<h2 align="center">
+    <img  src="assets/images/dohyo.jpeg" width="450px">
+</h2>
 
-First, highlighting the importance of the research done by the group and its members to improve in this style of competition never explored before, it is of paramount importance to cite Espetinho (our first mini sumo project) which showed the importance of some technical knowledge still not known by the group in this modality. In addition, one cannot fail to emphasize the group's valuable participation in the mini sumo competition at IronCUP 2021, bringing together all the knowledge acquired by the study in the previous year and the experience of participating in a competition with great teams. Thus, it is important to highlight how much this project is promising for the group's knowledge.
+Para criar uma base lógica para sua futura utilização na implementação do controle de um robô desenvolvido para competições dessa categoria foi desenvolvida um algoritmo com um conjunto de funções que foram julgadas bases para formação de qualquer estratégia, considerando um desenvolvimento de um robô com 2 rodas. Desse modo, foi pensando em como modularizar qualquer possível movimentação do robô em determinada estratégia. Para tanto, foi utilizado o <i>framework</i> Arduino para escrever o código na plataforma PlatformIO disponível como extensão do VSCode. Além disso, foi considerando a utilização de um microcontrolador também do tipo Arduino.
 
+<h2 align="center">
+    <img  src="assets/images/funcoes.jpeg" width="250px">
+</h2>
+
+Com tais funções é possível executar o controle dos motores, verificar os sensores de linha e distância, fazer movimentações para todas direções e curvas. Para facilitar a construção dos algoritmos das estratégias foi criado duas funções derivadas dessas funções, denominadas, básicas:
+
+- <b>return_battle</b>: Executa uma rotação no eixo da roda para retirar o robô da linha externa do Dohyo (borda)
+- <b>follow_enemy</b>: Executa um método de busca que verifica os sensores de distância e realiza ajustes de sentido para ir em direção ao oponente
+
+Por fim, foi adaptado tais códigos para o simulador <i>Webots</i>, junto a implementação de um CAD no ambiente para poder construir protótipos de estratégias e testá-las sem a necessidade da finalização da construção física do robô.
+
+<h2 align="center">
+    <img  src="assets/images/simulacao.jpeg" width="450px">
+</h2>
+
+## Organização
+
+Para o projeto foi utilizado a seguinte árvore de arquivos:
+
+- <b>assets</b>: Arquivos adicionais 
+    - <b>docs</b>: Arquivos relacionados a competições
+    - <b>images</b>: Imagens utilizadas
+- <b>controller</b>: Arquivos de implementação no microcontrolador
+    - <b>lib</b>: Biblioteca desenvolvida com funções básicas
+    - <b>src</b>: Algoritmo main
+- <b>webots</b>:  Arquivos de implementação no simulador
+    - <b>libraries</b>: Biblioteca desenvolvida com funções básicas
+    - <b>source</b>: Algoritmo main
+
+## Como testar
+
+Para testar os códigos no simulador, primeiramente se deve fazer o download do mesmo no seguinte <a href="https://cyberbotics.com/">link</a>. Vale ressaltar que o simulador é gratuito e open source.
+
+Com isso, se deve abrir o ambiente disponibilizado no simulador e acessar a pasta do mundo, adicionando os arquivos de controle presentes nesse repositório, incluindo o makefile. A seguir o comando no terminal necessário para baixar esse repositório:
+
+```shell
+$ git clone https://github.com/Grupo-SEMEAR-USP/Mini-Sumo2021.git
+```
+
+## Tecnologias
+
+Por fim, durante o desenvolvimento desse repositório foram utilizadas as seguintes tecnologias:
+
+- C/C++
+- Webots
+- Framework Arduino
+- PlatformIO
+
+---
+
+Desenvolvido por Francisco Affonso e Gianluca Capezzuto
