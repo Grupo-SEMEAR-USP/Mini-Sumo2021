@@ -83,12 +83,14 @@ void motorL(int pwm)
     }
 }
 
+/*
 // left and right line Sensors
 void line_sensor(int *left, int *right){
     //Checking if the reading is white 
     *left = analogRead(lineL) <= HIGH ? 1 : 0;
     *right = analogRead(lineR) <= HIGH ? 1 : 0;
 }
+*/
 
 // simple moves
 void move(int pwm){
